@@ -1,1 +1,347 @@
 
+oot@ip-172-31-43-135:/home/ubuntu/project# apt-get update
+Hit:1 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:3 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:4 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 Packages [15.0 MB]
+Get:5 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe Translation-en [5982 kB]
+Get:6 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:7 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 Components [3871 kB]
+Get:8 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 c-n-f Metadata [301 kB]
+Get:9 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/multiverse amd64 Packages [269 kB]
+Get:10 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/multiverse Translation-en [118 kB]
+Get:11 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/multiverse amd64 Components [35.0 kB]
+Get:12 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/multiverse amd64 c-n-f Metadata [8328 B]
+Get:13 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1741 kB]
+Get:14 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [324 kB]
+Get:15 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+Get:16 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [16.5 kB]
+Get:17 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1528 kB]
+Get:18 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [313 kB]
+Get:19 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
+Get:20 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.9 kB]
+Get:21 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2588 kB]
+Get:22 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [593 kB]
+Get:23 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:24 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [556 B]
+Get:25 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [32.1 kB]
+Get:26 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [6816 B]
+Get:27 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:28 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [496 B]
+Get:29 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.4 kB]
+Get:30 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/main Translation-en [9208 B]
+Get:31 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7284 B]
+Get:32 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/main amd64 c-n-f Metadata [368 B]
+Get:33 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [29.5 kB]
+Get:34 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [17.9 kB]
+Get:35 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+Get:36 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1444 B]
+Get:37 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:38 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:39 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Get:40 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 c-n-f Metadata [116 B]
+Get:41 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1446 kB]
+Get:42 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [234 kB]
+Get:43 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+Get:44 http://security.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9892 B]
+Get:45 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [929 kB]
+Get:46 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [212 kB]
+Get:47 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
+Get:48 http://security.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [19.9 kB]
+Get:49 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2445 kB]
+Get:50 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [562 kB]
+Get:51 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+Get:52 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 c-n-f Metadata [536 B]
+Get:53 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [28.8 kB]
+Get:54 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [6492 B]
+Get:55 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+Get:56 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 c-n-f Metadata [396 B]
+Fetched 39.8 MB in 6s (6530 kB/s)
+Reading package lists... Done
+root@ip-172-31-43-135:/home/ubuntu/project# apt install docker.io -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  bridge-utils containerd dns-root-data dnsmasq-base pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx docker-compose-v2 docker-doc rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dns-root-data dnsmasq-base docker.io pigz runc ubuntu-fan
+0 upgraded, 8 newly installed, 0 to remove and 83 not upgraded.
+Need to get 76.1 MB of archives.
+After this operation, 288 MB of additional disk space will be used.
+Get:1 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 pigz amd64 2.8-1 [65.6 kB]
+Get:2 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/main amd64 bridge-utils amd64 1.7.1-1ubuntu2 [33.9 kB]
+Get:3 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 runc amd64 1.3.3-0ubuntu1~24.04.3 [8815 kB]
+Get:4 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 containerd amd64 1.7.28-0ubuntu1~24.04.2 [38.4 MB]
+Get:5 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 dns-root-data all 2024071801~ubuntu0.24.04.1 [5918 B]
+Get:6 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 dnsmasq-base amd64 2.90-2ubuntu0.1 [376 kB]
+Get:7 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 docker.io amd64 28.2.2-0ubuntu1~24.04.1 [28.3 MB]
+Get:8 http://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 ubuntu-fan all 0.12.16+24.04.1 [34.2 kB]
+Fetched 76.1 MB in 2s (43.5 MB/s)
+Preconfiguring packages ...
+Selecting previously unselected package pigz.
+(Reading database ... 71752 files and directories currently installed.)
+Preparing to unpack .../0-pigz_2.8-1_amd64.deb ...
+Unpacking pigz (2.8-1) ...
+Selecting previously unselected package bridge-utils.
+Preparing to unpack .../1-bridge-utils_1.7.1-1ubuntu2_amd64.deb ...
+Unpacking bridge-utils (1.7.1-1ubuntu2) ...
+Selecting previously unselected package runc.
+Preparing to unpack .../2-runc_1.3.3-0ubuntu1~24.04.3_amd64.deb ...
+Unpacking runc (1.3.3-0ubuntu1~24.04.3) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../3-containerd_1.7.28-0ubuntu1~24.04.2_amd64.deb ...
+Unpacking containerd (1.7.28-0ubuntu1~24.04.2) ...
+Selecting previously unselected package dns-root-data.
+Preparing to unpack .../4-dns-root-data_2024071801~ubuntu0.24.04.1_all.deb ...
+Unpacking dns-root-data (2024071801~ubuntu0.24.04.1) ...
+Selecting previously unselected package dnsmasq-base.
+Preparing to unpack .../5-dnsmasq-base_2.90-2ubuntu0.1_amd64.deb ...
+Unpacking dnsmasq-base (2.90-2ubuntu0.1) ...
+Selecting previously unselected package docker.io.
+Preparing to unpack .../6-docker.io_28.2.2-0ubuntu1~24.04.1_amd64.deb ...
+Unpacking docker.io (28.2.2-0ubuntu1~24.04.1) ...
+Selecting previously unselected package ubuntu-fan.
+Preparing to unpack .../7-ubuntu-fan_0.12.16+24.04.1_all.deb ...
+Unpacking ubuntu-fan (0.12.16+24.04.1) ...
+Setting up dnsmasq-base (2.90-2ubuntu0.1) ...
+Setting up runc (1.3.3-0ubuntu1~24.04.3) ...
+Setting up dns-root-data (2024071801~ubuntu0.24.04.1) ...
+Setting up bridge-utils (1.7.1-1ubuntu2) ...
+Setting up pigz (2.8-1) ...
+Setting up containerd (1.7.28-0ubuntu1~24.04.2) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /usr/lib/systemd/system/containerd.service.
+Setting up ubuntu-fan (0.12.16+24.04.1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/ubuntu-fan.service → /usr/lib/systemd/system/ubuntu-fan.service.
+Setting up docker.io (28.2.2-0ubuntu1~24.04.1) ...
+info: Selecting GID from range 100 to 999 ...
+info: Adding group `docker' (GID 113) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /usr/lib/systemd/system/docker.socket.
+Processing triggers for dbus (1.14.10-4ubuntu4.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@ip-172-31-43-135:/home/ubuntu/project# mkdir green-blue-demo
+root@ip-172-31-43-135:/home/ubuntu/project# cd green-blue-demo
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo#  mkdir blue
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# cd blue
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# vim app.py
+
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# vim Dockerfile
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# ls
+Dockerfile  app.py
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# docker build -t blue-app .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM python:3.9-slim
+3.9-slim: Pulling from library/python
+38513bd72563: Pulling fs layer
+b3ec39b36ae8: Pulling fs layer
+fc7443084902: Pulling fs layer
+ea56f685404a: Pulling fs layer
+ea56f685404a: Waiting
+b3ec39b36ae8: Verifying Checksum
+b3ec39b36ae8: Download complete
+fc7443084902: Verifying Checksum
+fc7443084902: Download complete
+38513bd72563: Verifying Checksum
+38513bd72563: Download complete
+ea56f685404a: Verifying Checksum
+ea56f685404a: Download complete
+38513bd72563: Pull complete
+b3ec39b36ae8: Pull complete
+fc7443084902: Pull complete
+ea56f685404a: Pull complete
+Digest: sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b
+Status: Downloaded newer image for python:3.9-slim
+ ---> 085da638e1b8
+Step 2/5 : WORKDIR /app
+ ---> Running in 509e3276ac2a
+ ---> Removed intermediate container 509e3276ac2a
+ ---> b6184528d2f0
+Step 3/5 : COPY app.py .
+ ---> 348a6bc56d53
+Step 4/5 : RUN pip install flask
+ ---> Running in c88b1297a491
+Collecting flask
+  Downloading flask-3.1.2-py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 8.9 MB/s eta 0:00:00
+Collecting jinja2>=3.1.2
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 14.9 MB/s eta 0:00:00
+Collecting click>=8.1.3
+  Downloading click-8.1.8-py3-none-any.whl (98 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.2/98.2 kB 13.9 MB/s eta 0:00:00
+Collecting werkzeug>=3.1.0
+  Downloading werkzeug-3.1.5-py3-none-any.whl (225 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 225.0/225.0 kB 28.0 MB/s eta 0:00:00
+Collecting blinker>=1.9.0
+  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Collecting importlib-metadata>=3.6.0
+  Downloading importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Collecting markupsafe>=2.1.1
+  Downloading markupsafe-3.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20 kB)
+Collecting itsdangerous>=2.2.0
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting zipp>=3.20
+  Downloading zipp-3.23.0-py3-none-any.whl (10 kB)
+Installing collected packages: zipp, markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, importlib-metadata, flask
+Successfully installed blinker-1.9.0 click-8.1.8 flask-3.1.2 importlib-metadata-8.7.1 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.3 werkzeug-3.1.5 zipp-3.23.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 23.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+ ---> Removed intermediate container c88b1297a491
+ ---> d60e21d4cc81
+Step 5/5 : CMD ["python","app.py"]
+ ---> Running in aaf0c8370d41
+ ---> Removed intermediate container aaf0c8370d41
+ ---> 9b949ad0b45d
+Successfully built 9b949ad0b45d
+Successfully tagged blue-app:latest
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# cd ..
+mkdir green
+cd green
+vim app.py
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/green# vim Dockerfile
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/green# docker build -t green-app .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM python:3.9-slim
+ ---> 085da638e1b8
+Step 2/5 : WORKDIR /app
+ ---> Using cache
+ ---> b6184528d2f0
+Step 3/5 : COPY app.py .
+ ---> 2909b68fe56b
+Step 4/5 : RUN pip install flask
+ ---> Running in bc99733497f8
+Collecting flask
+  Downloading flask-3.1.2-py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 10.1 MB/s eta 0:00:00
+Collecting click>=8.1.3
+  Downloading click-8.1.8-py3-none-any.whl (98 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.2/98.2 kB 14.7 MB/s eta 0:00:00
+Collecting itsdangerous>=2.2.0
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting markupsafe>=2.1.1
+  Downloading markupsafe-3.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20 kB)
+Collecting importlib-metadata>=3.6.0
+  Downloading importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Collecting blinker>=1.9.0
+  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Collecting jinja2>=3.1.2
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 18.8 MB/s eta 0:00:00
+Collecting werkzeug>=3.1.0
+  Downloading werkzeug-3.1.5-py3-none-any.whl (225 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 225.0/225.0 kB 28.2 MB/s eta 0:00:00
+Collecting zipp>=3.20
+  Downloading zipp-3.23.0-py3-none-any.whl (10 kB)
+Installing collected packages: zipp, markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, importlib-metadata, flask
+Successfully installed blinker-1.9.0 click-8.1.8 flask-3.1.2 importlib-metadata-8.7.1 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.3 werkzeug-3.1.5 zipp-3.23.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 23.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+ ---> Removed intermediate container bc99733497f8
+ ---> d69af5b44e19
+Step 5/5 : CMD ["python","app.py"]
+ ---> Running in c29dc6b6c569
+ ---> Removed intermediate container c29dc6b6c569
+ ---> ff441595721b
+Successfully built ff441595721b
+Successfully tagged green-app:latest
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/green# cd ..
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# ls
+blue  green
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker network create big-net
+ac76461809ba54e5fe5b8a7050fb4b8cdb2f515084740159233ae9f8b9ed2fc5
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+ac76461809ba   big-net   bridge    local
+2ad237dcee4a   bridge    bridge    local
+54b40f6330df   host      host      local
+d4c41fc2e2d6   none      null      local
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo#  docker run -d --name blue bg-net -p 5001:5000 blue-app
+Unable to find image 'bg-net:latest' locally
+docker: Error response from daemon: pull access denied for bg-net, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker network create big-net docker run -d --name blue --network bg-net -p 5001:5000 blue-app
+unknown flag: --network
+
+Usage:  docker network create [OPTIONS] NETWORK
+
+Run 'docker network create --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker run -d --name blue --network bg-net -p 5001:5000 blue-app
+70367b495834d20be321c0eff8d446cf619c266dccac717de1144308bf12d9a1
+docker: Error response from daemon: failed to set up container networking: network bg-net not found
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker run -d --name blue --network bg-net -p 5001:5000 blue-app
+docker: Error response from daemon: Conflict. The container name "/blue" is already in use by container "70367b495834d20be321c0eff8d446cf619c266dccac717de1144308bf12d9a1". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo#  cd blue
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# docker run -d --name blue --network bg-net -p 5001:5000 blue-app
+docker: Error response from daemon: Conflict. The container name "/blue" is already in use by container "70367b495834d20be321c0eff8d446cf619c266dccac717de1144308bf12d9a1". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# docker run -d --name blue --network big-net -p 5001:5000 blue-app
+docker: Error response from daemon: Conflict. The container name "/blue" is already in use by container "70367b495834d20be321c0eff8d446cf619c266dccac717de1144308bf12d9a1". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo/blue# cd ..
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker run -d --name blue --network big-net -p 5001:5000 blue-app
+docker: Error response from daemon: Conflict. The container name "/blue" is already in use by container "70367b495834d20be321c0eff8d446cf619c266dccac717de1144308bf12d9a1". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker rm blue -f
+blue
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker run -d --name blue --network big-net -p 5001:5000 blue-app
+c5f96864bf69bcc203a6f26ada892b568d81d0ff538c1e74916ca1234b35c131
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# docker run -d --name green --network big-net -p 5002:5000 green-app
+3eca47b9467790cf23329a9a099286d547e289581130a265dcab2413f2b39f7c
+root@ip-172-31-43-135:/home/ubuntu/project/green-blue-demo# cd ..
+mkdir nginx
+cd nginx
+vim default.conf
+root@ip-172-31-43-135:/home/ubuntu/project/nginx# docker run -d \
+--name nginx \
+--network bg-net \
+-p 80:80 \
+-v $(pwd)/default.conf:/etc/nginx/conf.d/default.conf \
+nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+0c8d55a45c0d: Pull complete
+46bf3a120c8e: Pull complete
+4f4efe02d542: Pull complete
+7b6cb8ccac7b: Pull complete
+f73400a233fd: Pull complete
+47cd406a84ef: Pull complete
+bae5a1799a80: Pull complete
+Digest: sha256:341bf0f3ce6c5277d6002cf6e1fb0319fa4252add24ab6a0e262e0056d313208
+Status: Downloaded newer image for nginx:latest
