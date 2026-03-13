@@ -1,0 +1,52 @@
+Day 29 – Docker Basics Notes
+
+1. Docker Containers
+
+Containers allow applications to run in isolated environments.
+
+They are lightweight and start faster than virtual machines.
+
+2. Running a Container
+
+docker run hello-world
+
+This command pulls the image and runs a test container.
+
+3. Running Container in Detached Mode
+
+docker run -d ubuntu
+
+-d runs the container in the background.
+
+4. Interactive Container
+
+docker run -it ubuntu /bin/bash
+
+-i → interactive mode
+
+-t → terminal access
+
+5. List Running Containers
+
+docker ps
+
+Shows only running containers.
+
+6. List All Containers
+
+docker ps -a
+
+Shows running and stopped containers.
+
+7. Execute Command in Running Container
+
+docker exec -it <container_id> /bin/bash
+
+Runs commands inside a running container.
+
+8. Remove a Container
+
+docker rm <container_id>
+
+Deletes a stopped container.
+  
