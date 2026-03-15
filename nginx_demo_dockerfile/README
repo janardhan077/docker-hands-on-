@@ -1,0 +1,87 @@
+# Nginx Docker Demo
+
+This project demonstrates how to build and run a simple Docker container using **Nginx** to serve a custom HTML webpage.
+
+## Project Structure
+
+```
+.
+├── Dockerfile
+├── index.html
+└── README.md
+```
+
+## Dockerfile
+
+The Dockerfile uses **Nginx (Alpine)** as the base image and copies the custom HTML file into the default Nginx web directory.
+
+## Prerequisites
+
+Make sure the following are installed:
+
+* Docker
+
+Check installation:
+
+```bash
+docker --version
+```
+
+## Build the Docker Image
+
+Run the following command inside the project folder:
+
+```bash
+docker build -t my-nginx:v1 .
+```
+
+## Run the Container
+
+Start the container and expose the Nginx port:
+
+```bash
+docker run -d -p 8080:80 my-nginx:v1
+```
+
+Explanation:
+
+* `-d` → run container in background
+* `-p 8080:80` → maps **port 8080 (host)** to **port 80 (container)**
+
+## Access the Webpage
+
+Open your browser and go to:
+
+```
+http://localhost:8080
+```
+
+You should see the **custom HTML page** served from the Docker container.
+
+## Stop the Container
+
+Find the container ID:
+
+```bash
+docker ps
+```
+
+Stop it:
+
+```bash
+docker stop <container_id>
+```
+
+## Learning Outcome
+
+From this project I learned:
+
+* How to create a **Dockerfile**
+* How to build a **custom Docker image**
+* How to run a **container with port mapping**
+* How Nginx can serve static content from inside a container
+
+---
+
+Part of my **#90DaysOfDevOps learning journey**.
+

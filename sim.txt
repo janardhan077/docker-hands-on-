@@ -1,0 +1,4 @@
+hello "fix "
+good good
+ fix   use the echo 
+echo " hello " such kind  
