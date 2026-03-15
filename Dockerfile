@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 FROM python:3.9-slim
 
@@ -20,3 +21,8 @@ EXPOSE 80
 # serve the app / run the app (keep it running)
 
 CMD ["python","run.py"]
+=======
+FROM nginx:apline
+COPY index.hmtl /usr/share/nginx/html/
+EXPOSE 80
+>>>>>>> 469d152 (feat:newdir)
