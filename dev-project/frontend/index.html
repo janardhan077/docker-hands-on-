@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShopDash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+/* ── Reset & Tokens ──────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1e1e2a;
+  --border:#2a2a38;--border2:#3a3a4e;
+  --text:#f0f0f8;--text2:#9090b0;--text3:#5a5a78;
+  --accent:#7c6ff7;--accent2:#a89af7;--accentbg:#1a1730;
+  --green:#22d3a0;--greenbg:#0d2420;
+  --red:#f25c6e;--redbg:#2a0e14;
+  --amber:#f9a825;--amberbg:#251a05;
+  --radius:12px;--radius-sm:8px;--radius-lg:18px;
+  --shadow:0 4px 24px rgba(0,0,0,.45);
+  --font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer;border:none;outline:none}
+input,select{font-family:var(--font)}
+
+/* ── Scrollbar ───────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Layout ──────────────────────────────────── */
+.app{display:flex;flex-direction:column;min-height:100vh}
+.main{flex:1;max-width:1280px;margin:0 auto;width:100%;padding:0 24px}
+
+/* ── NAV ─────────────────────────────────────── */
+nav{background:rgba(10,10,15,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 24px}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;height:60px}
+.nav-logo{font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-.5px;margin-right:auto}
+.nav-logo span{color:var(--text);font-weight:300}
+.nav-link{font-size:13.5px;color:var(--text2);padding:6px 10px;border-radius:6px;transition:.15s;cursor:pointer}
+.nav-link:hover{color:var(--text);background:var(--bg3)}
+.nav-link.active{color:var(--accent2);background:var(--accentbg)}
+.nav-btn{font-size:13px;font-weight:500;padding:7px 16px;border-radius:8px;transition:.15s}
+.nav-btn.ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.nav-btn.ghost:hover{color:var(--text);border-color:var(--border2)}
+.nav-btn.solid{background:var(--accent);color:#fff}
+.nav-btn.solid:hover{background:var(--accent2)}
+.cart-badge{position:relative}
+.badge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;
+       background:var(--red);border-radius:50%;font-size:10px;font-weight:700;
+       display:flex;align-items:center;justify-content:center;color:#fff}
+
+/* ── Buttons ─────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+     font-size:14px;font-weight:500;padding:10px 22px;border-radius:var(--radius-sm);transition:.15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:var(--redbg);color:var(--red);border:1px solid var(--redbg)}
+.btn-danger:hover{border-color:var(--red)}
+.btn-sm{font-size:12.5px;padding:6px 14px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ── Cards ───────────────────────────────────── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.card-hover:hover{border-color:var(--border2);transform:translateY(-2px);transition:.2s;box-shadow:var(--shadow)}
+.card-hover{transition:.2s}
+
+/* ── Product Grid ────────────────────────────── */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:24px 0}
+.product-card{cursor:pointer;display:flex;flex-direction:column}
+.product-img{aspect-ratio:1;object-fit:cover;width:100%;background:var(--bg3)}
+.product-info{padding:14px;flex:1;display:flex;flex-direction:column;gap:6px}
+.product-category{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
+.product-name{font-size:14px;font-weight:500;line-height:1.4;flex:1}
+.product-price{font-size:16px;font-weight:600;color:var(--accent2)}
+.product-compare{font-size:12px;color:var(--text3);text-decoration:line-through;margin-left:6px}
+.stars{color:var(--amber);font-size:12px}
+
+/* ── Hero ────────────────────────────────────── */
+.hero{padding:72px 0 48px;text-align:center}
+.hero h1{font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.15;letter-spacing:-1.5px;margin-bottom:16px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--text2);font-size:16px;max-width:480px;margin:0 auto 32px}
+
+/* ── Section ─────────────────────────────────── */
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:32px 0 8px}
+.section-title{font-size:18px;font-weight:600;letter-spacing:-.3px}
+
+/* ── Search & Filter ─────────────────────────── */
+.search-bar{display:flex;gap:10px;margin-bottom:24px}
+.search-input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);
+              padding:10px 14px;color:var(--text);font-size:14px}
+.search-input:focus{outline:none;border-color:var(--accent)}
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filter-chip{font-size:12.5px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);
+             background:transparent;color:var(--text2);cursor:pointer;transition:.15s}
+.filter-chip:hover,.filter-chip.active{background:var(--accentbg);color:var(--accent2);border-color:var(--accent)}
+
+/* ── Cart ────────────────────────────────────── */
+.cart-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;padding:32px 0;align-items:start}
+.cart-item{display:flex;gap:14px;padding:16px;border-bottom:1px solid var(--border);align-items:center}
+.cart-item img{width:72px;height:72px;object-fit:cover;border-radius:8px;background:var(--bg3)}
+.qty-ctrl{display:flex;align-items:center;gap:8px}
+.qty-btn{width:28px;height:28px;border-radius:6px;background:var(--bg3);color:var(--text);
+         border:1px solid var(--border);font-size:16px;display:flex;align-items:center;justify-content:center}
+.qty-btn:hover{background:var(--bg4)}
+.order-summary{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.summary-row{display:flex;justify-content:space-between;font-size:14px;color:var(--text2);margin-bottom:10px}
+.summary-total{display:flex;justify-content:space-between;font-size:16px;font-weight:600;
+               border-top:1px solid var(--border);padding-top:14px;margin-top:4px}
+
+/* ── Checkout ────────────────────────────────── */
+.checkout-layout{max-width:800px;margin:0 auto;padding:40px 0}
+.steps{display:flex;gap:0;margin-bottom:36px}
+.step{flex:1;text-align:center;position:relative}
+.step::after{content:'';position:absolute;top:16px;left:50%;right:-50%;height:2px;background:var(--border)}
+.step:last-child::after{display:none}
+.step-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);
+          background:var(--bg);display:flex;align-items:center;justify-content:center;
+          margin:0 auto 6px;font-size:13px;font-weight:600;position:relative;z-index:1;transition:.3s}
+.step.done .step-dot{background:var(--green);border-color:var(--green);color:var(--bg)}
+.step.active .step-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.step-label{font-size:11.5px;color:var(--text3)}
+.step.active .step-label{color:var(--accent2)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12.5px;color:var(--text2);font-weight:500}
+.form-input{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+            padding:10px 14px;color:var(--text);font-size:14px}
+.form-input:focus{outline:none;border-color:var(--accent)}
+
+/* ── Dashboard ───────────────────────────────── */
+.dash-layout{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:calc(100vh - 60px)}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13.5px;
+              color:var(--text2);cursor:pointer;transition:.15s;border-left:2px solid transparent}
+.sidebar-item:hover{color:var(--text);background:var(--bg3)}
+.sidebar-item.active{color:var(--accent2);background:var(--accentbg);border-left-color:var(--accent)}
+.dash-content{padding:28px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.kpi-label{font-size:11.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:700;letter-spacing:-1px}
+.kpi-change{font-size:12px;color:var(--green);margin-top:4px}
+.kpi-change.down{color:var(--red)}
+
+/* ── Chart ───────────────────────────────────── */
+.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:24px}
+.chart-title{font-size:14px;font-weight:600;margin-bottom:18px;color:var(--text2)}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:160px}
+.bar{flex:1;border-radius:4px 4px 0 0;background:var(--accentbg);min-height:4px;
+     transition:.4s;cursor:pointer;position:relative}
+.bar:hover{background:var(--accent)}
+.bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+           font-size:9px;color:var(--text3);white-space:nowrap;font-family:var(--mono)}
+
+/* ── Orders Table ────────────────────────────── */
+.table{width:100%;border-collapse:collapse;font-size:13.5px}
+.table th{text-align:left;padding:10px 14px;color:var(--text3);font-size:11.5px;
+          text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--border)}
+.table td{padding:12px 14px;border-bottom:1px solid var(--border)}
+.table tr:hover td{background:var(--bg3)}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:500}
+.status-pending{background:var(--amberbg);color:var(--amber)}
+.status-processing{background:var(--accentbg);color:var(--accent2)}
+.status-shipped{background:rgba(34,211,160,.1);color:var(--green)}
+.status-delivered{background:rgba(34,211,160,.15);color:var(--green)}
+.status-cancelled{background:var(--redbg);color:var(--red)}
+
+/* ── Confirmation ────────────────────────────── */
+.confirm-card{max-width:560px;margin:80px auto;text-align:center;padding:48px 40px}
+.confirm-icon{width:72px;height:72px;border-radius:50%;background:var(--greenbg);
+              display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:32px}
+.order-id{font-family:var(--mono);font-size:13px;color:var(--text3);margin-top:6px}
+
+/* ── Toast ───────────────────────────────────── */
+.toast{position:fixed;bottom:24px;right:24px;z-index:999;
+       background:var(--bg4);border:1px solid var(--border2);border-radius:10px;
+       padding:12px 18px;font-size:13.5px;box-shadow:var(--shadow);
+       animation:slideup .25s ease;max-width:320px}
+@keyframes slideup{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.toast.success{border-left:3px solid var(--green);color:var(--green)}
+.toast.error{border-left:3px solid var(--red);color:var(--red)}
+
+/* ── Empty ───────────────────────────────────── */
+.empty{text-align:center;padding:80px 24px;color:var(--text3)}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty p{font-size:14px}
+
+/* ── Responsive ──────────────────────────────── */
+@media(max-width:900px){
+  .cart-layout{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .dash-layout{grid-template-columns:1fr}
+  .sidebar{display:flex;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border);padding:8px}
+  .sidebar-item{white-space:nowrap;border-left:none;border-bottom:2px solid transparent;padding:8px 16px}
+  .sidebar-item.active{border-left:none;border-bottom-color:var(--accent)}
+}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.product-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useContext, createContext, useCallback } = React;
+
+// ── Contexts ──────────────────────────────────────────────────
+const AuthCtx  = createContext(null);
+const CartCtx  = createContext(null);
+const ToastCtx = createContext(null);
+
+// ── Mock Data (replaces real API calls in this demo) ──────────
+const MOCK_PRODUCTS = [
+  {_id:'p1',name:'Wireless Noise-Cancelling Headphones',category:'Electronics',price:129.99,comparePrice:179.99,stock:45,sold:312,rating:4.7,numReviews:128,featured:true,images:['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'],description:'Premium over-ear headphones with 30hr battery and active noise-cancellation technology. Crystal-clear highs, deep bass, and up to 30 hours of listening time.'},
+  {_id:'p2',name:'Slim Fit Oxford Shirt',category:'Clothing',price:39.99,comparePrice:59.99,stock:120,sold:544,rating:4.5,numReviews:89,images:['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400'],description:'Classic Oxford weave slim-fit shirt in breathable cotton for everyday wear. Machine washable and wrinkle-resistant.'},
+  {_id:'p3',name:'JavaScript: The Good Parts',category:'Books',price:19.99,stock:200,sold:1022,rating:4.8,numReviews:342,images:['https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400'],description:"Douglas Crockford's authoritative guide to JavaScript best practices. Essential reading for every web developer."},
+  {_id:'p4',name:'Ergonomic Standing Desk',category:'Home & Garden',price:349.00,comparePrice:449.00,stock:18,sold:76,rating:4.6,numReviews:45,featured:true,images:['https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=400'],description:'Height-adjustable motorised standing desk with 3 memory presets. Built-in cable management and anti-collision sensor.'},
+  {_id:'p5',name:'Yoga Mat Pro',category:'Sports',price:54.99,stock:88,sold:230,rating:4.4,numReviews:67,images:['https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400'],description:'6mm thick non-slip yoga mat with alignment lines. Made from eco-friendly TPE foam.'},
+  {_id:'p6',name:'Mechanical Keyboard TKL',category:'Electronics',price:89.99,comparePrice:109.99,stock:62,sold:189,rating:4.6,numReviews:93,images:['https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400'],description:'Tenkeyless mechanical keyboard with Cherry MX Red switches and per-key RGB backlighting.'},
+  {_id:'p7',name:'Running Shoes Ultra',category:'Sports',price:119.99,comparePrice:149.99,stock:55,sold:401,rating:4.7,numReviews:156,featured:true,images:['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400'],description:'Lightweight responsive running shoes with carbon-fiber plate and engineered mesh upper.'},
+  {_id:'p8',name:'Cast Iron Skillet 12"',category:'Home & Garden',price:44.99,stock:140,sold:622,rating:4.9,numReviews:218,images:['https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?w=400'],description:'Pre-seasoned Lodge-style cast iron skillet for stovetop, oven, and campfire use.'},
+];
+
+const CATEGORIES = ['All','Electronics','Clothing','Books','Home & Garden','Sports'];
+
+const MOCK_ORDERS = [
+  {_id:'ord_001',user:'Jane Doe',total:169.98,status:'delivered',createdAt:'2024-05-10',items:2},
+  {_id:'ord_002',user:'Mike R.',total:349.00,status:'shipped',createdAt:'2024-05-18',items:1},
+  {_id:'ord_003',user:'Sara B.',total:94.97,status:'processing',createdAt:'2024-05-22',items:3},
+  {_id:'ord_004',user:'Tom K.',total:54.99,status:'pending',createdAt:'2024-05-24',items:1},
+  {_id:'ord_005',user:'Amy L.',total:209.98,status:'cancelled',createdAt:'2024-05-25',items:2},
+];
+
+const REVENUE = [120,145,98,210,175,230,195,310,280,190,350,420,380,290,440,510,475,390,520,600,555,480,630,590,650,720,680,710,760,810];
+
+// ── Helpers ───────────────────────────────────────────────────
+const Stars = ({n}) => '★'.repeat(Math.floor(n)) + '☆'.repeat(5-Math.floor(n));
+const fmt   = (n) => '$'+n.toFixed(2);
+
+// ── Toast Provider ────────────────────────────────────────────
+function ToastProvider({children}){
+  const [toast,setToast] = useState(null);
+  const show = useCallback((msg,type='success')=>{
+    setToast({msg,type});
+    setTimeout(()=>setToast(null),3000);
+  },[]);
+  return (
+    <ToastCtx.Provider value={show}>
+      {children}
+      {toast && <div className={`toast ${toast.type}`}>{toast.msg}</div>}
+    </ToastCtx.Provider>
+  );
+}
+
+// ── Cart Provider ─────────────────────────────────────────────
+function CartProvider({children}){
+  const [items,setItems] = useState([]);
+  const count  = items.reduce((s,i)=>s+i.qty,0);
+  const total  = items.reduce((s,i)=>s+i.price*i.qty,0);
+  const add    = (product)=>{
+    setItems(prev=>{
+      const ex = prev.find(i=>i._id===product._id);
+      if(ex) return prev.map(i=>i._id===product._id?{...i,qty:i.qty+1}:i);
+      return [...prev,{...product,qty:1}];
+    });
+  };
+  const remove = (id)=>setItems(p=>p.filter(i=>i._id!==id));
+  const setQty = (id,qty)=>{
+    if(qty<1){remove(id);return;}
+    setItems(p=>p.map(i=>i._id===id?{...i,qty}:i));
+  };
+  const clear  = ()=>setItems([]);
+  return <CartCtx.Provider value={{items,count,total,add,remove,setQty,clear}}>{children}</CartCtx.Provider>;
+}
+
+// ── NAV ───────────────────────────────────────────────────────
+function Nav({page,setPage,user,setUser}){
+  const {count} = useContext(CartCtx);
+  return (
+    <nav>
+      <div className="nav-inner">
+        <span className="nav-logo" onClick={()=>setPage('store')} style={{cursor:'pointer'}}>
+          Shop<span>Dash</span>
+        </span>
+        <span className={`nav-link${page==='store'?' active':''}`} onClick={()=>setPage('store')}>Store</span>
+        {user?.role==='admin' && <span className={`nav-link${page==='dashboard'?' active':''}`} onClick={()=>setPage('dashboard')}>Dashboard</span>}
+        <span className={`nav-link cart-badge${page==='cart'?' active':''}`} onClick={()=>setPage('cart')}>
+          🛒 Cart {count>0 && <span className="badge">{count}</span>}
+        </span>
+        {user
+          ? <button className="nav-btn ghost" onClick={()=>{setUser(null);setPage('store')}}>Sign out</button>
+          : <button className="nav-btn solid" onClick={()=>setPage('auth')}>Sign in</button>
+        }
+      </div>
+    </nav>
+  );
+}
+
+// ── STORE PAGE ────────────────────────────────────────────────
+function StorePage({setPage,setSelectedProduct}){
+  const {add}    = useContext(CartCtx);
+  const showToast= useContext(ToastCtx);
+  const [q,setQ] = useState('');
+  const [cat,setCat]=useState('All');
+
+  const filtered = MOCK_PRODUCTS.filter(p=>{
+    const matchQ   = p.name.toLowerCase().includes(q.toLowerCase()) || p.category.toLowerCase().includes(q.toLowerCase());
+    const matchCat = cat==='All' || p.category===cat;
+    return matchQ && matchCat;
+  });
+
+  return (
+    <div className="main">
+      <div className="hero">
+        <h1>Find what you<br/><span>actually love.</span></h1>
+        <p>Curated products. Free shipping over $50. Returns always free.</p>
+        <button className="btn btn-primary" onClick={()=>document.querySelector('.search-input')?.focus()}>
+          Browse Collection →
+        </button>
+      </div>
+
+      <div className="search-bar">
+        <input className="search-input" placeholder="Search products…" value={q} onChange={e=>setQ(e.target.value)}/>
+      </div>
+      <div className="filter-row">
+        {CATEGORIES.map(c=>(
+          <button key={c} className={`filter-chip${cat===c?' active':''}`} onClick={()=>setCat(c)}>{c}</button>
+        ))}
+      </div>
+
+      {filtered.length===0
+        ? <div className="empty"><div className="empty-icon">🔍</div><p>No products found</p></div>
+        : <div className="product-grid">
+            {filtered.map(p=>(
+              <div key={p._id} className="card card-hover product-card" onClick={()=>{setSelectedProduct(p);setPage('product')}}>
+                <img className="product-img" src={p.images[0]} alt={p.name} loading="lazy"/>
+                <div className="product-info">
+                  <div className="product-category">{p.category}</div>
+                  <div className="product-name">{p.name}</div>
+                  <div className="stars">{Stars(p.rating)} <span style={{color:'var(--text3)',fontSize:11}}>{p.rating} ({p.numReviews})</span></div>
+                  <div style={{display:'flex',alignItems:'baseline',marginTop:'auto',paddingTop:8}}>
+                    <span className="product-price">{fmt(p.price)}</span>
+                    {p.comparePrice>0 && <span className="product-compare">{fmt(p.comparePrice)}</span>}
+                  </div>
+                  <button className="btn btn-primary btn-sm" style={{marginTop:8,width:'100%'}}
+                    onClick={e=>{e.stopPropagation();add(p);showToast(`"${p.name}" added to cart`)}}>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+      }
+    </div>
+  );
+}
+
+// ── PRODUCT DETAIL ────────────────────────────────────────────
+function ProductPage({product,setPage}){
+  const {add} = useContext(CartCtx);
+  const showToast = useContext(ToastCtx);
+  const [qty,setQty]=useState(1);
+  if(!product) return null;
+  return (
+    <div className="main" style={{padding:'40px 24px'}}>
+      <button className="btn btn-outline btn-sm" style={{marginBottom:24}} onClick={()=>setPage('store')}>← Back to store</button>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'start'}}>
+        <img src={product.images[0]} alt={product.name} style={{width:'100%',borderRadius:16,background:'var(--bg3)'}}/>
+        <div>
+          <div style={{fontSize:12,color:'var(--accent2)',letterSpacing:1,textTransform:'uppercase',marginBottom:8}}>{product.category}</div>
+          <h1 style={{fontSize:28,fontWeight:700,letterSpacing:-.5,marginBottom:12,lineHeight:1.2}}>{product.name}</h1>
+          <div className="stars" style={{fontSize:14,marginBottom:16}}>{Stars(product.rating)} <span style={{color:'var(--text3)'}}>{product.rating} · {product.numReviews} reviews</span></div>
+          <p style={{color:'var(--text2)',fontSize:14.5,lineHeight:1.7,marginBottom:24}}>{product.description}</p>
+          <div style={{display:'flex',alignItems:'baseline',gap:12,marginBottom:28}}>
+            <span style={{fontSize:32,fontWeight:700,color:'var(--accent2)'}}>{fmt(product.price)}</span>
+            {product.comparePrice>0 && <span style={{fontSize:16,color:'var(--text3)',textDecoration:'line-through'}}>{fmt(product.comparePrice)}</span>}
+          </div>
+          <div style={{display:'flex',gap:12,alignItems:'center',marginBottom:24}}>
+            <div className="qty-ctrl">
+              <button className="qty-btn" onClick={()=>setQty(Math.max(1,qty-1))}>−</button>
+              <span style={{fontSize:15,fontWeight:600,minWidth:24,textAlign:'center'}}>{qty}</span>
+              <button className="qty-btn" onClick={()=>setQty(qty+1)}>+</button>
+            </div>
+            <button className="btn btn-primary" style={{flex:1}} onClick={()=>{
+              for(let i=0;i<qty;i++) add(product);
+              showToast(`${qty}× "${product.name}" added`);
+            }}>Add to Cart</button>
+          </div>
+          <div style={{background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:10,padding:'14px 18px',fontSize:13,color:'var(--text2)'}}>
+            ✅ In stock · 🚚 Free shipping over $50 · ↩ Free returns
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CART PAGE ─────────────────────────────────────────────────
+function CartPage({setPage,user}){
+  const {items,total,remove,setQty} = useContext(CartCtx);
+  const showToast = useContext(ToastCtx);
+  const shipping = total>50?0:5.99;
+  const tax      = total*0.08;
+  const grand    = total+shipping+tax;
+
+  if(items.length===0) return (
+    <div className="main"><div className="empty" style={{marginTop:60}}>
+      <div className="empty-icon">🛒</div>
+      <p>Your cart is empty</p>
+      <button className="btn btn-primary" style={{marginTop:16}} onClick={()=>setPage('store')}>Continue shopping</button>
+    </div></div>
+  );
+
+  return (
+    <div className="main">
+      <div className="section-header"><span className="section-title">Your Cart ({items.length} item{items.length>1?'s':''})</span></div>
+      <div className="cart-layout">
+        <div className="card">
+          {items.map(item=>(
+            <div className="cart-item" key={item._id}>
+              <img src={item.images[0]} alt={item.name}/>
+              <div style={{flex:1}}>
+                <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>{item.name}</div>
+                <div style={{fontSize:13,color:'var(--text3)'}}>{item.category}</div>
+                <div style={{fontSize:15,fontWeight:600,color:'var(--accent2)',marginTop:6}}>{fmt(item.price)}</div>
+              </div>
+              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:10}}>
+                <div className="qty-ctrl">
+                  <button className="qty-btn" onClick={()=>setQty(item._id,item.qty-1)}>−</button>
+                  <span style={{fontSize:14,fontWeight:600,minWidth:20,textAlign:'center'}}>{item.qty}</span>
+                  <button className="qty-btn" onClick={()=>setQty(item._id,item.qty+1)}>+</button>
+                </div>
+                <button className="btn btn-danger btn-sm" onClick={()=>{remove(item._id);showToast('Item removed','error')}}>Remove</button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="order-summary">
+          <div style={{fontSize:15,fontWeight:600,marginBottom:18}}>Order Summary</div>
+          <div className="summary-row"><span>Subtotal</span><span>{fmt(total)}</span></div>
+          <div className="summary-row"><span>Shipping</span><span>{shipping===0?'Free':fmt(shipping)}</span></div>
+          <div className="summary-row"><span>Tax (8%)</span><span>{fmt(tax)}</span></div>
+          <div className="summary-total"><span>Total</span><span style={{color:'var(--accent2)'}}>{fmt(grand)}</span></div>
+          <button className="btn btn-primary" style={{width:'100%',marginTop:20}}
+            onClick={()=>{if(!user){showToast('Please sign in first','error');setPage('auth');}else setPage('checkout');}}>
+            Proceed to Checkout →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CHECKOUT PAGE ─────────────────────────────────────────────
+function CheckoutPage({setPage}){
+  const {items,total,clear}=useContext(CartCtx);
+  const showToast=useContext(ToastCtx);
+  const [step,setStep]=useState(0);
+  const [form,setForm]=useState({name:'',email:'',street:'',city:'',zip:'',country:'US',card:'',expiry:'',cvv:''});
+  const steps=['Shipping','Payment','Review'];
+  const upd=(k,v)=>setForm(f=>({...f,[k]:v}));
+  const shipping=total>50?0:5.99;
+  const tax=total*0.08;
+  const grand=total+shipping+tax;
+
+  const next=()=>{
+    if(step<2) setStep(s=>s+1);
+    else{
+      showToast('Order placed! 🎉');
+      clear();
+      setPage('confirmation');
+    }
+  };
+
+  return (
+    <div className="main">
+      <div className="checkout-layout">
+        <div className="steps">
+          {steps.map((s,i)=>(
+            <div key={s} className={`step${i===step?' active':i<step?' done':''}`}>
+              <div className="step-dot">{i<step?'✓':i+1}</div>
+              <div className="step-label">{s}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="card" style={{padding:28,marginBottom:20}}>
+          {step===0 && (
+            <>
+              <div style={{fontSize:15,fontWeight:600,marginBottom:20}}>Shipping Information</div>
+              <div className="form-grid">
+                <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" value={form.name} onChange={e=>upd('name',e.target.value)} placeholder="Jane Doe"/></div>
+                <div className="form-group"><label className="form-label">Email</label><input className="form-input" value={form.email} onChange={e=>upd('email',e.target.value)} placeholder="jane@example.com"/></div>
+                <div className="form-group full"><label className="form-label">Street Address</label><input className="form-input" value={form.street} onChange={e=>upd('street',e.target.value)} placeholder="123 Main St"/></div>
+                <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.city} onChange={e=>upd('city',e.target.value)} placeholder="San Francisco"/></div>
+                <div className="form-group"><label className="form-label">ZIP Code</label><input className="form-input" value={form.zip} onChange={e=>upd('zip',e.target.value)} placeholder="94102"/></div>
+              </div>
+            </>
+          )}
+          {step===1 && (
+            <>
+              <div style={{fontSize:15,fontWeight:600,marginBottom:20}}>Payment Details</div>
+              <div className="form-grid">
+                <div className="form-group full">
+                  <label className="form-label">Card Number</label>
+                  <input className="form-input" style={{fontFamily:'var(--mono)'}} value={form.card} onChange={e=>upd('card',e.target.value)} placeholder="4242 4242 4242 4242"/>
+                </div>
+                <div className="form-group"><label className="form-label">Expiry</label><input className="form-input" value={form.expiry} onChange={e=>upd('expiry',e.target.value)} placeholder="MM/YY"/></div>
+                <div className="form-group"><label className="form-label">CVV</label><input className="form-input" value={form.cvv} onChange={e=>upd('cvv',e.target.value)} placeholder="123"/></div>
+              </div>
+              <div style={{marginTop:16,padding:'12px 16px',background:'var(--greenbg)',borderRadius:8,fontSize:13,color:'var(--green)'}}>
+                🔒 Your payment is encrypted and secure
+              </div>
+            </>
+          )}
+          {step===2 && (
+            <>
+              <div style={{fontSize:15,fontWeight:600,marginBottom:20}}>Review Order</div>
+              {items.map(i=>(
+                <div key={i._id} style={{display:'flex',gap:12,padding:'10px 0',borderBottom:'1px solid var(--border)'}}>
+                  <img src={i.images[0]} style={{width:52,height:52,objectFit:'cover',borderRadius:8,background:'var(--bg3)'}}/>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:13.5,fontWeight:500}}>{i.name}</div>
+                    <div style={{fontSize:12,color:'var(--text3)'}}>Qty: {i.qty}</div>
+                  </div>
+                  <span style={{fontSize:14,fontWeight:600}}>{fmt(i.price*i.qty)}</span>
+                </div>
+              ))}
+              <div style={{marginTop:16}}>
+                <div className="summary-row"><span>Subtotal</span><span>{fmt(total)}</span></div>
+                <div className="summary-row"><span>Shipping</span><span>{shipping===0?'Free':fmt(shipping)}</span></div>
+                <div className="summary-row"><span>Tax</span><span>{fmt(tax)}</span></div>
+                <div className="summary-total"><span>Total</span><span style={{color:'var(--accent2)'}}>{fmt(grand)}</span></div>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div style={{display:'flex',gap:12,justifyContent:'space-between'}}>
+          <button className="btn btn-outline" onClick={()=>step>0?setStep(s=>s-1):setPage('cart')}>← Back</button>
+          <button className="btn btn-primary" onClick={next}>
+            {step<2?'Continue →':'Place Order 🎉'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CONFIRMATION PAGE ─────────────────────────────────────────
+function ConfirmationPage({setPage}){
+  const orderId='ORD-'+Math.random().toString(36).substr(2,8).toUpperCase();
+  return (
+    <div className="main">
+      <div className="card confirm-card">
+        <div className="confirm-icon">✅</div>
+        <h2 style={{fontSize:24,fontWeight:700,letterSpacing:-.5}}>Order Confirmed!</h2>
+        <div className="order-id">{orderId}</div>
+        <p style={{color:'var(--text2)',fontSize:14,marginTop:16,marginBottom:32,maxWidth:360,margin:'16px auto 32px'}}>
+          Thank you for your purchase. You'll receive a confirmation email shortly with tracking details.
+        </p>
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+          <button className="btn btn-primary" onClick={()=>setPage('store')}>Continue Shopping</button>
+          <button className="btn btn-outline" onClick={()=>setPage('store')}>View Orders</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── AUTH PAGE ─────────────────────────────────────────────────
+function AuthPage({setPage,setUser}){
+  const [mode,setMode]=useState('login');
+  const [form,setForm]=useState({name:'',email:'',password:''});
+  const showToast=useContext(ToastCtx);
+  const upd=(k,v)=>setForm(f=>({...f,[k]:v}));
+
+  const submit=()=>{
+    if(form.email==='admin@shopdash.com'&&form.password==='admin123'){
+      setUser({name:'Admin',email:form.email,role:'admin'});
+      showToast('Welcome back, Admin!');setPage('dashboard');
+    } else if(form.email&&form.password){
+      setUser({name:form.name||'Jane Doe',email:form.email,role:'customer'});
+      showToast('Signed in successfully!');setPage('store');
+    } else showToast('Please fill all fields','error');
+  };
+
+  return (
+    <div className="main" style={{display:'flex',justifyContent:'center',padding:'80px 24px'}}>
+      <div className="card" style={{width:'100%',maxWidth:400,padding:36}}>
+        <div style={{textAlign:'center',marginBottom:28}}>
+          <div style={{fontSize:22,fontWeight:700,letterSpacing:-.5,marginBottom:6}}>
+            {mode==='login'?'Welcome back':'Create account'}
+          </div>
+          <div style={{fontSize:13,color:'var(--text3)'}}>
+            {mode==='login'?'Sign in to continue':'Join thousands of happy customers'}
+          </div>
+        </div>
+        <div style={{display:'flex',flexDirection:'column',gap:14}}>
+          {mode==='register' && (
+            <div className="form-group">
+              <label className="form-label">Full Name</label>
+              <input className="form-input" value={form.name} onChange={e=>upd('name',e.target.value)} placeholder="Jane Doe"/>
+            </div>
+          )}
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input className="form-input" type="email" value={form.email} onChange={e=>upd('email',e.target.value)} placeholder="you@example.com"/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input className="form-input" type="password" value={form.password} onChange={e=>upd('password',e.target.value)} placeholder="••••••••"/>
+          </div>
+          <button className="btn btn-primary" style={{width:'100%',marginTop:4}} onClick={submit}>
+            {mode==='login'?'Sign In →':'Create Account →'}
+          </button>
+          <div style={{textAlign:'center',fontSize:13,color:'var(--text3)'}}>
+            {mode==='login'?'No account?':'Have an account?'}
+            <span style={{color:'var(--accent2)',cursor:'pointer',marginLeft:6}}
+              onClick={()=>setMode(mode==='login'?'register':'login')}>
+              {mode==='login'?'Sign up':'Sign in'}
+            </span>
+          </div>
+          <div style={{textAlign:'center',fontSize:12,color:'var(--text3)',padding:'8px 0',borderTop:'1px solid var(--border)'}}>
+            Demo: admin@shopdash.com / admin123
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── DASHBOARD PAGE ────────────────────────────────────────────
+function DashboardPage(){
+  const [tab,setTab]=useState('overview');
+  const navItems=[
+    {id:'overview',label:'📊 Overview'},
+    {id:'orders',label:'📦 Orders'},
+    {id:'products',label:'🏷 Products'},
+    {id:'analytics',label:'📈 Analytics'},
+  ];
+
+  return (
+    <div className="dash-layout">
+      <aside className="sidebar">
+        <div style={{padding:'0 20px 16px',fontSize:11,color:'var(--text3)',textTransform:'uppercase',letterSpacing:1}}>Admin Panel</div>
+        {navItems.map(n=>(
+          <div key={n.id} className={`sidebar-item${tab===n.id?' active':''}`} onClick={()=>setTab(n.id)}>{n.label}</div>
+        ))}
+      </aside>
+      <div className="dash-content">
+        {tab==='overview'  && <Overview/>}
+        {tab==='orders'    && <OrdersTab/>}
+        {tab==='products'  && <ProductsTab/>}
+        {tab==='analytics' && <AnalyticsTab/>}
+      </div>
+    </div>
+  );
+}
+
+function Overview(){
+  const kpis=[
+    {label:'Total Revenue',value:'$24,891',change:'+12.4%'},
+    {label:'Total Orders',value:'1,847',change:'+8.1%'},
+    {label:'Active Customers',value:'3,204',change:'+5.3%'},
+    {label:'Products',value:'128',change:'+2 this week',up:true},
+  ];
+  const max=Math.max(...REVENUE);
+  return (
+    <div>
+      <div style={{fontSize:20,fontWeight:700,marginBottom:24,letterSpacing:-.5}}>Overview</div>
+      <div className="kpi-grid">
+        {kpis.map(k=>(
+          <div key={k.label} className="kpi-card">
+            <div className="kpi-label">{k.label}</div>
+            <div className="kpi-value">{k.value}</div>
+            <div className="kpi-change">{k.change}</div>
+          </div>
+        ))}
+      </div>
+      <div className="chart-box">
+        <div className="chart-title">Revenue — Last 30 Days</div>
+        <div className="bar-chart" style={{paddingBottom:24}}>
+          {REVENUE.map((v,i)=>(
+            <div key={i} className="bar" style={{height:`${(v/max)*100}%`}} title={`Day ${i+1}: $${v}`}>
+              {(i%5===0) && <span className="bar-label">d{i+1}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{fontSize:15,fontWeight:600,marginBottom:14}}>Recent Orders</div>
+      <OrdersTable orders={MOCK_ORDERS.slice(0,4)}/>
+    </div>
+  );
+}
+
+function OrdersTable({orders}){
+  const colors={pending:'status-pending',processing:'status-processing',shipped:'status-shipped',delivered:'status-delivered',cancelled:'status-cancelled'};
+  return (
+    <div className="card" style={{overflowX:'auto'}}>
+      <table className="table">
+        <thead><tr>
+          <th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th>
+        </tr></thead>
+        <tbody>{orders.map(o=>(
+          <tr key={o._id}>
+            <td style={{fontFamily:'var(--mono)',fontSize:12,color:'var(--text3)'}}>{o._id}</td>
+            <td style={{fontWeight:500}}>{o.user}</td>
+            <td style={{color:'var(--text2)'}}>{o.items}</td>
+            <td style={{fontWeight:600,color:'var(--accent2)'}}>{fmt(o.total)}</td>
+            <td><span className={`status-badge ${colors[o.status]}`}>{o.status}</span></td>
+            <td style={{color:'var(--text3)',fontSize:12}}>{o.createdAt}</td>
+          </tr>
+        ))}</tbody>
+      </table>
+    </div>
+  );
+}
+
+function OrdersTab(){
+  return (
+    <div>
+      <div style={{fontSize:20,fontWeight:700,marginBottom:24,letterSpacing:-.5}}>All Orders</div>
+      <OrdersTable orders={MOCK_ORDERS}/>
+    </div>
+  );
+}
+
+function ProductsTab(){
+  return (
+    <div>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24}}>
+        <div style={{fontSize:20,fontWeight:700,letterSpacing:-.5}}>Products</div>
+        <button className="btn btn-primary btn-sm">+ Add Product</button>
+      </div>
+      <div className="card" style={{overflowX:'auto'}}>
+        <table className="table">
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Sold</th><th>Rating</th></tr></thead>
+          <tbody>{MOCK_PRODUCTS.map(p=>(
+            <tr key={p._id}>
+              <td>
+                <div style={{display:'flex',gap:10,alignItems:'center'}}>
+                  <img src={p.images[0]} style={{width:36,height:36,borderRadius:6,objectFit:'cover',background:'var(--bg3)'}}/>
+                  <span style={{fontSize:13.5,fontWeight:500}}>{p.name}</span>
+                </div>
+              </td>
+              <td style={{color:'var(--text3)',fontSize:12.5}}>{p.category}</td>
+              <td style={{fontWeight:600,color:'var(--accent2)'}}>{fmt(p.price)}</td>
+              <td>
+                <span style={{color:p.stock<20?'var(--red)':'var(--green)',fontWeight:500}}>{p.stock}</span>
+              </td>
+              <td style={{color:'var(--text2)'}}>{p.sold}</td>
+              <td><span className="stars" style={{fontSize:12}}>★ {p.rating}</span></td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function AnalyticsTab(){
+  const max=Math.max(...REVENUE);
+  const topProducts=MOCK_PRODUCTS.sort((a,b)=>b.sold-a.sold).slice(0,5);
+  const statusData=[{s:'pending',n:4,c:'var(--amber)'},{s:'processing',n:8,c:'var(--accent)'},{s:'shipped',n:12,c:'var(--green)'},{s:'delivered',n:31,c:'var(--green)'},{s:'cancelled',n:2,c:'var(--red)'}];
+  const maxS=Math.max(...statusData.map(s=>s.n));
+  return (
+    <div>
+      <div style={{fontSize:20,fontWeight:700,marginBottom:24,letterSpacing:-.5}}>Analytics</div>
+      <div className="chart-box">
+        <div className="chart-title">Daily Revenue (30 days)</div>
+        <div className="bar-chart" style={{paddingBottom:24}}>
+          {REVENUE.map((v,i)=>(
+            <div key={i} className="bar" style={{height:`${(v/max)*100}%`,background:'var(--accentbg)'}}
+              onMouseEnter={e=>e.target.style.background='var(--accent)'}
+              onMouseLeave={e=>e.target.style.background='var(--accentbg)'}>
+              {i%5===0 && <span className="bar-label">d{i+1}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20}}>
+        <div className="chart-box">
+          <div className="chart-title">Top Products by Sales</div>
+          {topProducts.map(p=>(
+            <div key={p._id} style={{marginBottom:12}}>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:12.5,marginBottom:5}}>
+                <span style={{color:'var(--text2)',maxWidth:200,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{p.name}</span>
+                <span style={{fontWeight:600,color:'var(--accent2)'}}>{p.sold}</span>
+              </div>
+              <div style={{height:5,background:'var(--bg4)',borderRadius:3}}>
+                <div style={{height:'100%',width:`${(p.sold/1022)*100}%`,background:'var(--accent)',borderRadius:3}}/>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="chart-box">
+          <div className="chart-title">Orders by Status</div>
+          {statusData.map(s=>(
+            <div key={s.s} style={{marginBottom:12}}>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:12.5,marginBottom:5}}>
+                <span style={{color:'var(--text2)',textTransform:'capitalize'}}>{s.s}</span>
+                <span style={{fontWeight:600,color:s.c}}>{s.n}</span>
+              </div>
+              <div style={{height:5,background:'var(--bg4)',borderRadius:3}}>
+                <div style={{height:'100%',width:`${(s.n/maxS)*100}%`,background:s.c,borderRadius:3,opacity:.8}}/>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── APP ROOT ──────────────────────────────────────────────────
+function App(){
+  const [page,setPage]=useState('store');
+  const [user,setUser]=useState(null);
+  const [selectedProduct,setSelectedProduct]=useState(null);
+  return (
+    <ToastProvider>
+      <CartProvider>
+        <div className="app">
+          <Nav page={page} setPage={setPage} user={user} setUser={setUser}/>
+          {page==='store'        && <StorePage setPage={setPage} setSelectedProduct={setSelectedProduct}/>}
+          {page==='product'      && <ProductPage product={selectedProduct} setPage={setPage}/>}
+          {page==='cart'         && <CartPage setPage={setPage} user={user}/>}
+          {page==='checkout'     && <CheckoutPage setPage={setPage}/>}
+          {page==='confirmation' && <ConfirmationPage setPage={setPage}/>}
+          {page==='auth'         && <AuthPage setPage={setPage} setUser={setUser}/>}
+          {page==='dashboard'    && <DashboardPage/>}
+        </div>
+      </CartProvider>
+    </ToastProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
