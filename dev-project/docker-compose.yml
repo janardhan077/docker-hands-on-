@@ -1,29 +1,20 @@
-# ============================================================
-#  ShopDash — Docker Compose (Multi-Stage)
-#  Services: frontend (nginx) · backend (node) · mongo · mongo-express
-#
-#  Usage:
-#    docker compose up --build          # first run
-#    docker compose up -d               # detached
-#    docker compose down -v             # stop + remove volumes
-# ============================================================
+
 
 version: "3.9"
 
-# ── Named volumes ────────────────────────────────────────────
 volumes:
-  mongo_data:        # Persists MongoDB data between restarts
-  mongo_config:      # Persists MongoDB config
+  mongo_data:        
+  mongo_config:     
 
-# ── Networks ─────────────────────────────────────────────────
+
 networks:
-  frontend_net:      # frontend ↔ backend only
-  backend_net:       # backend ↔ mongo only (never exposed to browser)
+  frontend_net:     
+  backend_net:       
 
-# ── Services ─────────────────────────────────────────────────
+
 services:
 
-  # ── 1. MongoDB ─────────────────────────────────────────────
+ 
   mongo:
     image: mongo:7.0
     container_name: shopdash_mongo
@@ -44,11 +35,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
-    # ⚠️  Do NOT expose port 27017 in production — internal only
-    # ports:
-    #   - "27017:27017"   # uncomment for local dev debugging only
-
-  # ── 2. Mongo Express (DB GUI — dev only) ───────────────────
+    
   mongo-express:
     image: mongo-express:1.0.2
     container_name: shopdash_mongoexpress
@@ -63,18 +50,18 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME:    ${MEXPRESS_USER:-admin}
       ME_CONFIG_BASICAUTH_PASSWORD:    ${MEXPRESS_PASS:-adminpass}
     ports:
-      - "8081:8081"    # Browse DB at http://localhost:8081
+      - "8081:8081"    
     networks:
       - backend_net
     profiles:
-      - dev            # Only starts when: docker compose --profile dev up
+      - dev           
 
-  # ── 3. Backend (Node.js + Express) ─────────────────────────
+ 
   backend:
     build:
       context:    ./backend
       dockerfile: Dockerfile
-      target:     runner          # Use production stage
+      target:     runner          e
     container_name: shopdash_backend
     restart: unless-stopped
     depends_on:
@@ -94,29 +81,27 @@ services:
       timeout: 5s
       retries: 4
       start_period: 15s
-    # ⚠️  Don't expose 5000 in production — nginx proxies internally
-    # ports:
-    #   - "5000:5000"   # uncomment for local API testing only
+    
     deploy:
       resources:
         limits:
           cpus:   "0.75"
           memory: 512M
 
-  # ── 4. Frontend (React + Nginx) ────────────────────────────
+  
   frontend:
     build:
       context:    ./frontend
       dockerfile: Dockerfile
-      target:     runner          # Use production nginx stage
+      target:     runner          
     container_name: shopdash_frontend
     restart: unless-stopped
     depends_on:
       backend:
         condition: service_healthy
     ports:
-      - "8080:80"        # Main app → http://localhost
-      - "443:443"      # HTTPS (attach cert volume for prod)
+      - "8080:80"       
+      - "443:443"     
     networks:
       - frontend_net
     healthcheck:
@@ -130,12 +115,12 @@ services:
           cpus:   "0.25"
           memory: 128M
 
-  # ── 5. Seed Runner (one-shot init) ─────────────────────────
+  
   seed:
     build:
       context:    ./backend
       dockerfile: Dockerfile
-      target:     builder         # Needs all devDeps for seed script
+      target:     builder         
     container_name: shopdash_seed
     depends_on:
       mongo:
@@ -145,6 +130,6 @@ services:
     command: node seed.js
     networks:
       - backend_net
-    restart: "no"                 # Run once and exit
+    restart: "no"                
     profiles:
-      - seed                      # Only runs when: docker compose --profile seed up seed
+      - seed                      
